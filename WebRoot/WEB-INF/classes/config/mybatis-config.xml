@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 实体类,简称 -设置别名 -->
+	<typeAliases>
+		<typeAlias alias="User" type="com.xhSmart.model.User" />
+		<typeAlias alias="Department" type="com.xhSmart.model.Department" />
+		<typeAlias alias="Jurisdiction" type="com.xhSmart.model.Jurisdiction" />
+		<typeAlias alias="Post" type="com.xhSmart.model.Post" />
+		<typeAlias alias="UserTask" type="com.xhSmart.model.UserTask" />
+		<typeAlias alias="Demand" type="com.xhSmart.model.Demand" />
+		<typeAlias alias="Project" type="com.xhSmart.model.Project" />
+		<typeAlias alias="Product" type="com.xhSmart.model.Product" />
+		<typeAlias alias="Allocation" type="com.xhSmart.model.Allocation" />
+		<typeAlias alias="JurisdictionGroup" type="com.xhSmart.model.JurisdictionGroup" />
+		<typeAlias alias="Feedback" type="com.xhSmart.model.Feedback" />
+		
+	</typeAliases>
+	<!-- 实体接口映射资源 -->
+	<!--
+		说明：如果xxMapper.xml配置文件放在和xxMapper.java统一目录下，mappers也可以省略，因为org.mybatis.spring.mapper.MapperFactoryBean默认会去查找与xxMapper.java相同目录和名称的xxMapper.xml
+	-->
+	<mappers>
+		<mapper resource="com/xhSmart/mapper/userMapper.xml" />
+		<mapper resource="com/xhSmart/mapper/departmentMapper.xml" />
+		<mapper resource="com/xhSmart/mapper/jurisdictionMapper.xml" />
+		<mapper resource="com/xhSmart/mapper/postMapper.xml" />
+		<mapper resource="com/xhSmart/mapper/userTaskMapper.xml" />
+		<mapper resource="com/xhSmart/mapper/demandMapper.xml" />
+		<mapper resource="com/xhSmart/mapper/projectMapper.xml" />
+		<mapper resource="com/xhSmart/mapper/productMapper.xml" />
+		<mapper resource="com/xhSmart/mapper/allocationMapper.xml" />
+		<mapper resource="com/xhSmart/mapper/jurisdictionGroupMapper.xml" />
+		<mapper resource="com/xhSmart/mapper/feedbackMapper.xml" />
+	</mappers>
+
+</configuration>  

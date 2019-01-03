@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.xhSmart.mapper.ProductMapper">
+	
+	<insert id="save" parameterType="Product">
+		insert into product(product_id, product_name,product_depict,product_state,product_path,submit_user,project_id,demand_id) values(#{product_id}, #{product_name},#{product_depict},#{product_state},#{product_path},#{submit_user},#{project_id},#{demand_id})
+	</insert>
+	
+	<update id="update" parameterType="Product">
+		update product set product_name=#{product_name},product_depict=#{product_depict},product_path=#{product_path},product_state=#{product_state} where product_id=#{product_id}
+	</update>
+	
+	<delete id="remove" parameterType="int">
+		delete from product where product_id=#{product_id}
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="Product">
+		select product_id product_id,product_name product_name,product_depict product_depict,product_state product_state,product_path product_path, submit_user submit_user, project_id project_id, product_submitTime product_submitTime, demand_id demand_id from product where product_id=#{product_id}
+	</select>
+	<select id="findByProjectId" parameterType="int" resultType="Product">
+		select product_id product_id,product_name product_name,product_depict product_depict,product_state product_state,product_path product_path, submit_user submit_user, project_id project_id, product_submitTime product_submitTime, demand_id demand_id from product where project_id=#{project_id} order by product_submitTime desc 
+	</select>
+	<select id="findAllByUser" resultType="Product">
+		select product_id product_id,product_name product_name,product_depict product_depict,product_state product_state,product_path product_path, submit_user submit_user, project_id project_id, product_submitTime,demand_id demand_id from product where submit_user=#{user_id} and product_name like "%"#{product_name}"%"  order by product_state,product_submitTime desc limit #{startPos},#{pageSize}                    
+	</select>
+	<select id="getProductsCountByUser" parameterType="int" resultType="int">
+         SELECT COUNT(*) FROM product WHERE submit_user = #{user_id} and product_name like "%"#{product_name}"%"
+    </select>
+    <select id="findAllByAdmin" resultType="Product">
+		select product_id product_id,product_name product_name,product_depict product_depict,product_state product_state,product_path product_path, submit_user submit_user, project_id project_id, product_submitTime,demand_id demand_id from product where product_name like "%"#{product_name}"%" order by product_state,product_submitTime desc limit #{startPos},#{pageSize}                    
+	</select>
+	<select id="getProductsCountByAdmin" parameterType="int" resultType="int">
+         SELECT COUNT(*) FROM product 
+    </select>
+	<select id="findAll" resultType="Product">
+		select product_id product_id,product_name product_name,product_depict product_depict,product_state product_state,product_path product_path, submit_user submit_user, project_id project_id, product_submitTime,demand_id demand_id from product where product_name like "%"#{product_name}"%" order by product_submitTime desc                    
+	</select>
+	
+</mapper>

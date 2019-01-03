@@ -1,0 +1,3 @@
+eclipse.preferences.version=1
+validator.Checked=WebRoot/static,WebRoot/WEB-INF/web.xml,WebRoot/WEB-INF/sitemesh.xml,WebRoot/decorators/main.jsp,WebRoot/js,WebRoot/WEB-INF/decorators.xml
+validator.Unchecked=

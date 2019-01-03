@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.xhSmart.mapper.FeedbackMapper">
+	
+	<insert id="save" parameterType="Feedback">
+		insert into feedback(feedback_name,feedback_depict,user_id,project_id,feedback_time) values(#{feedback_name},#{feedback_depict},#{user_id},#{project_id},#{feedback_time})
+	</insert>
+	
+	<update id="update" parameterType="Feedback">
+	
+	</update>
+	
+	<delete id="remove" parameterType="int">
+		delete from feedback where feedback_id=#{feedback_id}
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="Feedback">
+		select feedback_time feedback_time, feedback_id feedback_id,feedback_name feedback_name,feedback_depict feedback_depict, user_id user_id,project_id project_id from feedback where feedback_id=#{feedback_id}
+	</select>
+	<select id="findByProjectId" parameterType="int" resultType="Feedback">
+		select feedback_time feedback_time, feedback_id feedback_id,feedback_name feedback_name,feedback_depict feedback_depict, user_id user_id,project_id project_id from feedback where project_id=#{project_id} order by feedback_time desc
+	</select>
+	
+	<select id="findAll" resultType="Feedback">
+		select feedback_id feedback_id,feedback_name feedback_name,feedback_depict feedback_depict, user_id user_id,project_id project_id,feedback_time feedback_time from feedback order by feedback_time desc
+	</select> 
+	
+</mapper>

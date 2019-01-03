@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/decorators">
+<excludes>
+    <!--<pattern>/NoPermission.jsp</pattern>
+    <pattern>/product/getAllProduct</pattern>
+    <pattern>/demand/getAllDemand</pattern>
+    <pattern>/project/getAllProject</pattern>-->
+</excludes>
+<decorator name="main1" page="main1.jsp">
+<pattern>/allocation*</pattern>
+<pattern>/department*</pattern>
+<pattern>/group*</pattern>
+<pattern>/jurisdiction*</pattern>
+<pattern>/jurisdictionGroup*</pattern>
+<pattern>/post*</pattern>
+<pattern>/user*</pattern>
+<pattern>/userTask*</pattern>
+<pattern>/demand/toAddDemand*</pattern>
+<pattern>/demand/getDemand*</pattern>
+<pattern>/product/toAddProduct*</pattern>
+<pattern>/product/getProduct*</pattern>
+<pattern>/project/getAProject*</pattern>
+<pattern>/project/toAddProject*</pattern>
+<pattern>/login.jsp</pattern>
+<pattern>/NoPermission.jsp</pattern>
+</decorator>
+<decorator name="main" page="main.jsp">
+	<pattern>/product/getAllProduct*</pattern>
+	<pattern>/demand/getAllDemand*</pattern>
+	<pattern>/project/getAllProject*</pattern>
+</decorator>
+</decorators>

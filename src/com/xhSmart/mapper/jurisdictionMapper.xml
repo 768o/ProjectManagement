@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.xhSmart.mapper.JurisdictionMapper">
+	
+	<insert id="save" parameterType="Jurisdiction">
+		insert into Jurisdiction(jurisdiction_name,jurisdiction_depict) values(#{jurisdiction_name},#{jurisdiction_depict})
+	</insert>
+	
+	<update id="update" parameterType="Jurisdiction">
+		update Jurisdiction set jurisdiction_name=#{jurisdiction_name},jurisdiction_depict=#{jurisdiction_depict} where jurisdiction_id=#{jurisdiction_id}
+	</update>
+	
+	<delete id="remove" parameterType="int">
+		delete from Jurisdiction where jurisdiction_id=#{jurisdiction_id}
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="Jurisdiction">
+		select jurisdiction_id jurisdiction_id,jurisdiction_name jurisdiction_name,jurisdiction_depict jurisdiction_depict from Jurisdiction where jurisdiction_id=#{jurisdiction_id}
+	</select>
+	
+	<select id="findAll" resultType="Jurisdiction">
+		select jurisdiction_id jurisdiction_id,jurisdiction_name jurisdiction_name,jurisdiction_depict jurisdiction_depict from Jurisdiction
+	</select>
+	
+</mapper>

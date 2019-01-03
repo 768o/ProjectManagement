@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.xhSmart.mapper.UserMapper">
+	
+	<insert id="save" parameterType="User">
+		insert into user(user_loginName,user_password,user_name,post_id,department_id,isadmin) values(#{user_loginName},#{user_password},#{user_name},#{post_id},#{department_id},#{isadmin})
+	</insert>
+	
+	<update id="update" parameterType="User">
+		update user set user_loginName=#{user_loginName},user_password=#{user_password},user_name=#{user_name},department_id=#{department_id},post_id=#{post_id},user_isdelete=#{user_isdelete},isadmin=#{isadmin} where user_id=#{user_id}
+	</update>
+	
+	<delete id="remove" parameterType="int">
+		delete from user where user_id=#{user_id}
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="User">
+		select user_id user_id,user_loginName user_loginName,user_password user_password,user_name user_name,post_id post_id,department_id department_id,user_isdelete user_isdelete,isadmin isadmin from user where user_id=#{user_id}
+	</select>
+	<select id="findByDepartment" parameterType="int" resultType="User">
+		select user_id user_id,user_loginName user_loginName,user_password user_password,user_name user_name,post_id post_id,department_id department_id,user_isdelete user_isdelete,isadmin isadmin from user where department_id=#{department_id}
+	</select>
+	<select id="findByLoginName" parameterType="String" resultType="User">
+		select user_id user_id,user_loginName user_loginName,user_password user_password,user_name user_name,post_id post_id,department_id department_id,user_isdelete user_isdelete,isadmin isadmin from user where user_loginName=#{user_loginName}
+	</select>
+	
+	<select id="findAll" resultType="User">
+		select user_id user_id,user_loginName user_loginName,user_name user_name,post_id post_id,department_id department_id,user_isdelete user_isdelete, isadmin isadmin from user
+	</select>
+	
+</mapper>

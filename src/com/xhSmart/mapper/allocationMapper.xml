@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.xhSmart.mapper.AllocationMapper">
+	
+	<insert id="save" parameterType="Allocation">
+		insert into allocation(project_id, user_task, user_id) values(#{project_id},#{user_task},#{user_id})
+	</insert>
+	
+	<update id="update" parameterType="Allocation">
+		update allocation set user_task=#{user_task} where project_id=#{project_id} and user_id=#{user_id}
+	</update>
+	
+	<delete id="remove" parameterType="int">
+		delete from allocation where user_id=#{0} and project_id = #{1}
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById"  resultType="Allocation">
+		select project_id project_id, user_jurisdictionGroup user_jurisdictionGroup, 
+		user_joinTime user_joinTime, user_task user_task, user_id user_id, 
+		user_isQuit user_isQuit from allocation where project_id=#{0} and user_id=#{1}
+	</select>
+	<select id="findAllByPro" parameterType="int" resultType="Allocation">
+		select project_id project_id, user_jurisdictionGroup 
+		user_jurisdictionGroup, user_joinTime user_joinTime, 
+		user_task user_task, user_id user_id, user_isQuit user_isQuit from allocation where project_id=#{project_id}             
+	</select>
+	<select id="findAll" resultType="Allocation">
+		select project_id project_id, user_jurisdictionGroup user_jurisdictionGroup, 
+		user_joinTime user_joinTime, user_task user_task, user_id user_id, user_isQuit user_isQuit from allocation                  
+	</select>
+	
+</mapper>

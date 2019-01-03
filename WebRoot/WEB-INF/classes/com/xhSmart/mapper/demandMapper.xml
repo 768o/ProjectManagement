@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+
+<mapper namespace="com.xhSmart.mapper.DemandMapper">
+  
+	<insert id="save" parameterType="Demand">
+		insert into demand(demand_id, demand_name,demand_depict,demand_type,demand_state,demand_path,submit_user,demand_fatherid,project_id) values(#{demand_id}, #{demand_name},#{demand_depict},#{demand_type},#{demand_state},#{demand_path},#{submit_user},#{demand_fatherid},#{project_id})
+	</insert>
+	
+	<update id="update" parameterType="Demand">
+		update demand set demand_name=#{demand_name},demand_depict=#{demand_depict},demand_path=#{demand_path},project_id=#{project_id},demand_state=#{demand_state} where demand_id=#{demand_id}
+	</update>
+	
+	<delete id="remove" parameterType="int">
+		delete from demand where demand_id=#{demand_id}
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="Demand">
+		select demand_id demand_id,demand_name demand_name,demand_depict demand_depict,demand_type demand_type,demand_state demand_state,demand_path demand_path, submit_user submit_user, project_id project_id, demand_submitTime demand_submitTime,demand_fatherid demand_fatherid from demand where demand_id=#{demand_id}
+	</select>
+	<select id="findByProjectId" parameterType="int" resultType="Demand">
+		select demand_id demand_id,demand_name demand_name,demand_depict demand_depict,demand_type demand_type,demand_state demand_state,demand_path demand_path, submit_user submit_user, project_id project_id, demand_submitTime demand_submitTime,demand_fatherid demand_fatherid from demand where project_id=#{project_id}
+	</select>
+	<select id="findByFatherId" resultType="Demand">
+		select demand_id demand_id,demand_name demand_name,demand_depict demand_depict,demand_type demand_type,demand_state demand_state,demand_path demand_path, submit_user submit_user, project_id project_id, demand_submitTime demand_submitTime,demand_fatherid demand_fatherid from demand where demand_fatherid=#{demand_fatherid} order by demand_fatherid ,demand_submitTime                            
+	</select>
+	<select id="findAllByUser" resultType="Demand">
+		select demand_id demand_id,demand_name demand_name,demand_depict demand_depict,demand_type demand_type,demand_state demand_state
+		,demand_path demand_path, submit_user submit_user, project_id project_id, demand_submitTime demand_submitTime,demand_fatherid demand_fatherid from demand
+		 where submit_user=#{user_id} and demand_name like "%"#{demand_name}"%" and demand_type='初始' order by demand_state asc,demand_submitTime desc limit #{startPos},#{pageSize}                          
+	</select>
+	<select id="getDemandsCountByUser"  resultType="int">
+         SELECT COUNT(*) FROM demand WHERE submit_user = #{user_id} and demand_name like "%"#{demand_name}"%" and demand_type='初始'
+    </select>
+    <select id="findAllByAdmin" resultType="Demand">
+		select demand_id demand_id,demand_name demand_name,demand_depict demand_depict,demand_type demand_type,demand_state demand_state
+		,demand_path demand_path, submit_user submit_user, project_id project_id, demand_submitTime demand_submitTime,demand_fatherid demand_fatherid from demand
+		 where demand_name like "%"#{demand_name}"%" and demand_type='初始' order by demand_state asc,demand_submitTime desc limit #{startPos},#{pageSize}                          
+	</select>
+    <select id="getDemandsCountByAdmin" parameterType="int" resultType="int">
+         SELECT COUNT(*) FROM demand WHERE demand_name like "%"#{demand_name}"%" and demand_type='初始'
+    </select>
+	<select id="findAll" resultType="Demand">
+		select demand_id demand_id,demand_name demand_name,demand_depict demand_depict,demand_type demand_type,demand_state demand_state,demand_path demand_path, submit_user submit_user, project_id project_id, demand_submitTime demand_submitTime,demand_fatherid demand_fatherid from demand where demand_type='初始' order by demand_state asc,demand_submitTime desc                            
+	</select>
+	
+</mapper>

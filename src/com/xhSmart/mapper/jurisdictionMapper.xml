@@ -9,24 +9,24 @@
 <mapper namespace="com.xhSmart.mapper.JurisdictionMapper">
 	
 	<insert id="save" parameterType="Jurisdiction">
-		insert into Jurisdiction(jurisdiction_name,jurisdiction_depict) values(#{jurisdiction_name},#{jurisdiction_depict})
+		insert into jurisdiction(jurisdiction_name,jurisdiction_depict) values(#{jurisdiction_name},#{jurisdiction_depict})
 	</insert>
 	
 	<update id="update" parameterType="Jurisdiction">
-		update Jurisdiction set jurisdiction_name=#{jurisdiction_name},jurisdiction_depict=#{jurisdiction_depict} where jurisdiction_id=#{jurisdiction_id}
+		update jurisdiction set jurisdiction_name=#{jurisdiction_name},jurisdiction_depict=#{jurisdiction_depict} where jurisdiction_id=#{jurisdiction_id}
 	</update>
 	
 	<delete id="remove" parameterType="int">
-		delete from Jurisdiction where jurisdiction_id=#{jurisdiction_id}
+		delete from jurisdiction where jurisdiction_id=#{jurisdiction_id}
 	</delete>
 	
 	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
 	<select id="findById" parameterType="int" resultType="Jurisdiction">
-		select jurisdiction_id jurisdiction_id,jurisdiction_name jurisdiction_name,jurisdiction_depict jurisdiction_depict from Jurisdiction where jurisdiction_id=#{jurisdiction_id}
+		select jurisdiction_id jurisdiction_id,jurisdiction_name jurisdiction_name,jurisdiction_depict jurisdiction_depict from jurisdiction where jurisdiction_id=#{jurisdiction_id}
 	</select>
 	
 	<select id="findAll" resultType="Jurisdiction">
-		select jurisdiction_id jurisdiction_id,jurisdiction_name jurisdiction_name,jurisdiction_depict jurisdiction_depict from Jurisdiction
+		select jurisdiction_id jurisdiction_id,jurisdiction_name jurisdiction_name,jurisdiction_depict jurisdiction_depict from jurisdiction
 	</select>
 	
 </mapper>

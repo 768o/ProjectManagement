@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>xhSmart项目管理系统</title>
+<title>任务进度管理系统</title>
  <base href="<%=basePath%>">
 <decorator:head />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">

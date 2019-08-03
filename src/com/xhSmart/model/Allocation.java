@@ -16,8 +16,51 @@ public class Allocation {
     private int user_jurisdictionGroup;             //jurisdictionGroup_id
     private JurisdictionGroup jurisdictionGroup;  //user_jurisdiction_inProject
     private Timestamp user_joinTime;              //joinTime
-    private int isQuit;                         //isQuit
+    private Timestamp endTime;
+    private String endTimeStr;
+    private String UserName;
+    private String path;
+    public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
+	public String getUserName() {
+		return UserName;
+	}
+	public void setUserName(String userName) {
+		UserName = userName;
+	}
+	public Timestamp getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(Timestamp endTime) {
+		this.endTime = endTime;
+	}
+	public String getEndTimeStr() {
+		return endTimeStr;
+	}
+	public void setEndTimeStr(String endTimeStr) {
+		this.endTimeStr = endTimeStr;
+	}
+	private int isQuit;                         //isQuit
+    private String name;
+    private long progress;
     
+    public long getProgress() {
+		return progress;
+	}
+	public void setProgress(long progress) {
+		this.progress = progress;
+	}
+    
+    public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
     
 	public UserTask getTask() {
 		return task;

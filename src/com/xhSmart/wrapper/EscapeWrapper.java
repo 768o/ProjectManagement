@@ -12,7 +12,6 @@ public class EscapeWrapper extends HttpServletRequestWrapper{
 
 	public EscapeWrapper(HttpServletRequest request) {
 		super(request);
-		// TODO Auto-generated constructor stub
 	}
 	@Override
 	public String getParameter(String name){

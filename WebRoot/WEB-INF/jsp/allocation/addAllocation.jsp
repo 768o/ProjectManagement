@@ -23,6 +23,8 @@
 	-->
 <script type="text/javascript" src="/xhSmart/js/jquery.min.js"></script>
 <script type="text/javascript" src="/xhSmart/js/jquery.validate.js"></script>
+<script type="text/javascript" src="/xhSmart/js/jedate.js"></script>
+<link rel="stylesheet" type="text/css" href="/xhSmart/js/jedate.css">
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#postForm").validate();
@@ -62,10 +64,25 @@ $(function(){
 				<section class="panel"> <header class="panel-heading">
 				</header>
 				<div class="panel-body">
-					<form action="<%=basePath%>allocation/addAllocation" class="form-horizontal adminex-form cmxform" id="postForm"  method="get">
+					<form action="<%=basePath%>allocation/addAllocation" class="form-horizontal adminex-form cmxform" id="postForm"  
+					method="post"  enctype="multipart/form-data">
 						<header>
-						<b> 设置分工 </b></header>
+						<b> 设置任务分工 </b></header>
 						<input type="hidden" name="project_id" value="${project_id}"> 
+						<div class="form-group">
+							<label class="col-sm-2 col-sm-2 control-label"><span>*</span>任务</label>
+							<div class="col-sm-10">
+								<input minlength="2" maxlength="25" type="text" name="name"
+									class="form-control required" placeholder="任务名" id="name">
+							</div>
+						</div>
+						<div class="form-group jeitem">
+			                <label class="col-sm-2 col-sm-2 control-label jelabel">预约完成时间</label>
+			                <div class="col-sm-10 jeinpbox">
+			                	<input class="form-control required" type="text" class="jeinput" name="endTimeStr"
+			                		id="test04" placeholder="YYYY-MM-DD hh:mm:ss">
+			                </div>
+			            </div>
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label"><span>*</span>部门</label>
 							<div class="col-sm-10">
@@ -88,17 +105,11 @@ $(function(){
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 col-sm-2 control-label"><span>*</span>任务</label>
+							<label class="col-sm-2 col-sm-2 control-label"><span></span>文件</label>
 							<div class="col-sm-10">
-								 <select name="user_task" class="form-control">
-									<c:if test="${!empty taskList }">
-										<c:forEach items="${taskList}" var="task">						   
-													<option value="${task.task_id}">${task.task_name}</option>		
-										</c:forEach>
-									</c:if>
-								</select>
+								<input type="file" class="file" id="file" name="file" >
 							</div>
-						</div>
+					   </div>
 						<!--  <div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label"><span>*</span>权限</label>
 							<div class="col-sm-10">
@@ -123,5 +134,6 @@ $(function(){
 			</div>
 		</div>
 	</div>
+		<script type="text/javascript" src="/xhSmart/js/demo.js"></script>
 </body>
 </html>

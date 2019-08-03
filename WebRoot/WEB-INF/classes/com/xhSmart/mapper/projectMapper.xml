@@ -14,7 +14,7 @@
 		,#{project_endTime},#{project_createReason},#{user_id})
 	</insert>
 	<update id="update" parameterType="Project">
-		update project set project_state=#{project_state},project_createTime=#{project_createTime}
+		update project set project_state=#{project_state},project_createTime=#{project_createTime},user_id=#{user_id} 
 		, project_endTime=#{project_endTime} where project_id=#{project_id}
 	</update>
 	<delete id="remove" parameterType="int">
@@ -29,7 +29,7 @@
 	<select id="findAllByUser" resultType="Project">
 		select project.user_id user_id, project.project_id project_id,project_name project_name,project_depict project_depict,project_state project_state
 		,project_createTime project_createTime, project_endTime project_endTime
-		, project_createReason project_createReason from project,allocation where allocation.project_id=project.project_id 
+		, project_createReason project_createReason from project,allocation where allocation.project_id=project.project_id and project.user_id >0
 	    and allocation.user_id=#{user_id} order by project_endTime ,project_createTime desc limit #{startPos},#{pageSize} 
 	</select>
 	<select id="findAllByAdmin" resultType="Project">
@@ -43,7 +43,7 @@
 	<select id="findByName" parameterType="String" resultType="Project">
 		select project.user_id user_id, project_id project_id,project_name project_name,project_depict project_depict,project_state project_state
 		,project_createTime project_createTime, project_endTime project_endTime
-		, project_createReason project_createReason from project where project_name=#{project_name}
+		, project_createReason project_createReason from project where project_name=#{project_name} order by project_createTime limit 1 
 	</select>
 	
 	

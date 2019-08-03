@@ -89,8 +89,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div class="page-heading">
       <h3> 项目管理 <span>
       <a href="<%=basePath%>project/getAllProject">项目</a>
-      <a href="<%=basePath%>demand/getAllDemand">需求</a>
-            <a href="<%=basePath%>product/getAllProduct">产品</a>
+      <!--  <a href="<%=basePath%>demand/getAllDemand">需求</a>-->
+      <a href="<%=basePath%>product/getAllProduct">我的任务</a>
       </span></h3>
        <div class="pull-left">
        <a href="javascript:stateFilter('')" class="btn btn-info btn-sm">全部</a>

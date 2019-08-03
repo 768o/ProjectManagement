@@ -11,7 +11,8 @@ import com.xhSmart.model.Allocation;
 public interface AllocationService {
 	void save(Allocation object);
 	boolean update(Allocation object);
-	boolean remove(int uid, int pid);
-	Allocation findById(int project_id,int user_id);
+	boolean remove(int uid, int pid,String name);
+	Allocation findById(int project_id,int user_id,String name);
 	List<Allocation> findAllByPro(int id);
+	List<Allocation> findByUserId(int user_id);
 }

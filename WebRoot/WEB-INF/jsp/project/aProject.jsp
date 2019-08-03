@@ -14,7 +14,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="/xhSmart/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/xhSmart/js/jquery.validate.js"></script>
     <script type="text/javascript" src="/xhSmart/js/jquery.form.js"></script>
-
     <title>My JSP 'main_user.jsp' starting page</title>
   <script>
   $(function(){
@@ -63,6 +62,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	});
   
  	$(function(){
+ 	
+ 		
  		$("#feedbackButton").click(function(){
  			$.ajax({
  				type : "POST",
@@ -84,9 +85,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  			
  					}
  			    },
- 			   error: function(XMLHttpRequest){  
- 					     alert( "Error: " + XMLHttpRequest.responseText);  
- 					   }  
+ 			   error: function(XMLHttpRequest){
+ 					alert("Error: "+XMLHttpRequest.responseText);
+ 					}
  			});
  		});
   	});
@@ -223,25 +224,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
    <div class="page-heading">
    
-   <h3> 项目管理 <span>
-      <a href="<%=basePath%>project/getAllProject">项目</a>
-      <a href="<%=basePath%>demand/getAllDemand">需求</a>
-      <a href="<%=basePath%>product/getAllProduct">产品</a>
+   <h3> 任务管理 <span>
       </span></h3>
-     
-   
       </div>
+      
+      <div class="wrapper">
+      <div class="row">
+        <div class="col-sm-12">
+          <section class="panel">
+            <header class="panel-heading"> 任务进度图示  <span class="tools pull-right">
+            <input type="hidden" id ="project_id" name="project_id" value="${project_id}"> 
+            <a href="javascript:;" class="fa fa-chevron-down"></a>
+              </span> </header>
+            <div class="panel-body">
+              <section id="unseen">
+                <div id="chartmain" style="width:100%; height: 400px;"></div>
+          	  </section>
+        </div>
+      </div>
+      
     <div class="wrapper">
       <div class="row">
         <div class="col-sm-12">
           <section class="panel">
-            <header class="panel-heading"> 项目详细  <span class="tools pull-right"><a href="javascript:;" class="fa fa-chevron-down"></a>
-              
+            <header class="panel-heading"> 任务进度详细  <span class="tools pull-right">
+            <!-- <a href="javascript:;" class="fa fa-chevron-up"></a> -->
+            <a href="javascript:;" class="fa fa-chevron-down"></a>
               </span> </header>
+            <!-- <div class="panel-body" style="display: none">-->
             <div class="panel-body">
               <section id="unseen">
-               
-               
                  <div class="pull-left"><button class="btn btn-info">项目</button></div>
                   <table class="table table-condensed table-hover table-bordered" id="t1">
                     <thead>
@@ -269,14 +281,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </tbody>                 
                   </table>
                  
-                   <div class="pull-left"><button class="btn btn-info" id="left2">进度与反馈</button></div>
+                   <div class="pull-left"><button class="btn btn-info" id="left2">任务进度与反馈</button></div>
                     <div style="overflow-x: auto; overflow-y: auto; max-height: 500px;" id="t2" class="table">
                     <table class="table table-condensed table-hover table-bordered">
                     <thead>
                       <tr>
                         <th>时间</th>
-                         <th>反馈人</th>   
-                        <th>反馈项</th>
+                        <th>员工</th>   
+                        <th>操作</th>
                         <th>描述</th>
                       </tr>
                     </thead>
@@ -295,7 +307,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </table> 
                   </div>
                
-                  <div class="pull-left"><button class="btn btn-info" id="left3">需求</button></div>
+                  <!-- <div class="pull-left"><button class="btn btn-info" id="left3">需求</button></div>
                   <div class="pull-right">
                   <c:if test="${project.project_state ne '已结束'}">
                    <c:if test="${allocation.task.task_name eq '需求'}">
@@ -388,12 +400,176 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </c:if>    
                     </tbody>                 
                   </table>    
-                  </div> 
+                  </div> -->
 				 </section>
             </div></div>
           </section>
         </div>
       </div>
     </div>
+    	<script type="text/javascript" src="https://lib.baomitu.com/echarts/4.2.1/echarts.min.js"></script>
+    	<script>
+    	$(function(){
+    		var id = $("#project_id").val();
+    		$.get('<%=basePath%>project/getAProjectJson?id=' + id,function(data){
+    		    var obj = [];
+    		    obj = eval("("+data+")");
+    		    var time = [];
+    		    var timeStr = [];
+    		    var has = false;
+    		    for (var index in obj)
+    		    {
+    		    	for(var j in time){
+    		    		if(time[j] == obj[index].user_joinTime){
+    		    			has = true;
+    		    			break;
+    		    		}
+    		    	}
+    		    	if(!has){
+    		    		time.push(obj[index].user_joinTime);
+    		    		var date = new Date(obj[index].user_joinTime);
+    		    		timeStr.push(date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+ " " + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds());
+    		    	}
+					has = false;
+    		    }
+    		    //timeStr = timeStr.reverse();
+    		    option.xAxis.data = timeStr;
+    		    console.log(timeStr);
+    		    option.legend.data = [];
+    		    option.series = [];
+
+    		    hasstr = [];
+    		    hass = false;
+    		    iiiii = 0;
+    		    console.log(obj);
+    			for (var index in obj){
+    			    		    seriesdate = [];
+    					console.log(obj[index].userName);
+    			    	option.legend.data[index]= obj[index].name;
+    			    	for(var ii in timeStr){
+    			    		if(index == 0){
+    			    		seriesdate.push(0);
+    			    		}
+    			    	}
+    			    	for(var kk in hasstr){
+    			    		if(hasstr[kk] == obj[index].name){
+    			    			hass = true;
+    			    			break;
+    			    		}
+    			    	}
+    			    	if(!hass){
+    			    		hasstr.push(obj[index].name);
+	    			    	option.series[iiiii] = {
+	    			    		name:obj[index].name,
+	    			    		type:'line',
+	    			    		data:seriesdate,
+	    			    	};
+	    			    	iiiii++;
+    			    	}
+    			    	 hass = false;
+				}
+				iii = 0;
+				jjj = 0;
+				kkk = 0;
+				kkkk = timeStr.length;
+				console.log("*************************");
+				console.log(option.series);
+				console.log(hasstr);
+				console.log(obj);
+				for (var index in obj){
+    				for(var i in hasstr){
+    					if(hasstr[i] == obj[index].name){
+    						console.log(hasstr[i]);
+    						for(var j in timeStr){
+    							var date = new Date(obj[index].user_joinTime);
+    		    		        var dateStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+ " " + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    		    		        if(timeStr[j] == dateStr)
+    		    		        {
+    		    		        console.log("i= " + i);
+    		    		        	console.log(option.series[i]);
+    		    		        	for(var aa = j; aa < kkkk; aa++){
+    		    		        		console.log(aa+","+i + "," + obj[index].progress);
+    		    		        		option.series[i].data[aa] = obj[index].progress;
+    		    		        	}
+    		    		        }else{
+    		    		        	kkk++;
+    		    		        }
+    						}
+    						console.log("****************************");
+    						break;
+    					}else{
+    						iii ++;
+    					}
+    				}
+				}
+				console.log(option.data);
+				console.log(option.series);
+				console.log(option);
+				myChart.setOption(option);
+    		});
+    	});
+var option = {
+    title: {
+        text: ''
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['员工A','员工B','员工C','员工D','员工E']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['2019-11-01','2019-11-02','2019-11-03','2019-11-04','2019-11-05','2019-11-06','2019-11-07']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+        {
+            name:'员工A',
+            type:'line',
+            data:[0, 10, 30, 50, 80, 90, 100]
+        },
+        {
+            name:'员工B',
+            type:'line',
+            data:[0, 20, 35, 55, 70, 80, 95]
+        },
+        {
+            name:'员工C',
+            type:'line',
+            data:[0, 15, 50, 60, 80, 100, 100]
+        },
+        {
+            name:'员工D',
+            type:'line',
+            data:[0, 23, 29, 29, 60, 70, 90]
+        },
+        {
+            name:'员工E',
+            type:'line',
+            data:[0, 50, 80, 100,100,100,100]
+        }
+    ]
+};
+ //初始化echarts实例
+  var myChart = echarts.init(document.getElementById('chartmain'));
+
+  //使用制定的配置项和数据显示图表
+  //myChart.setOption(option);
+  </script>
   </body>
 </html>

@@ -12,8 +12,9 @@ public interface AllocationMapper {
 	void save(Allocation object);
 	boolean update(Allocation object);
 	//boolean remove(int id);
-	Allocation findById(int project_id,int user_id);
+	Allocation findById(int project_id,int user_id,String Name);
 	List<Allocation> findAll();
 	List<Allocation> findAllByPro(int id);
-	boolean remove(int uid, int pid);
+	boolean remove(int uid, int pid,String name);
+	List<Allocation> findAllByUserId(int user_id);
 }

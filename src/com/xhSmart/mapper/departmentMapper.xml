@@ -9,24 +9,24 @@
 <mapper namespace="com.xhSmart.mapper.DepartmentMapper">
 	
 	<insert id="save" parameterType="Department">
-		insert into Department(department_name,department_depict) values(#{department_name},#{department_depict})
+		insert into department(department_name,department_depict) values(#{department_name},#{department_depict})
 	</insert>
 	
 	<update id="update" parameterType="Department">
-		update Department set department_name=#{department_name},department_depict=#{department_depict} where department_id=#{department_id}
+		update department set department_name=#{department_name},department_depict=#{department_depict} where department_id=#{department_id}
 	</update>
 	
 	<delete id="remove" parameterType="int">
-		delete from Department where department_id=#{department_id}
+		delete from department where department_id=#{department_id}
 	</delete>
 	
 	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
 	<select id="findById" parameterType="int" resultType="Department">
-		select department_id department_id,department_name department_name,department_depict department_depict from Department where department_id=#{department_id}
+		select department_id department_id,department_name department_name,department_depict department_depict from department where department_id=#{department_id}
 	</select>
 	
 	<select id="findAll" resultType="Department">
-		select department_id department_id,department_name department_name,department_depict department_depict from Department
+		select department_id department_id,department_name department_name,department_depict department_depict from department
 	</select>
 	
 </mapper>

@@ -9,24 +9,24 @@
 <mapper namespace="com.xhSmart.mapper.JurisdictionGroupMapper">
 	
 	<insert id="save" parameterType="JurisdictionGroup">
-		insert into JurisdictionGroup(jurisdictionGroup_name,jurisdictionGroup_depict,jurisdiction) values(#{jurisdictionGroup_name},#{jurisdictionGroup_depict},#{jurisdiction})
+		insert into jurisdictionGroup(jurisdictionGroup_name,jurisdictionGroup_depict,jurisdiction) values(#{jurisdictionGroup_name},#{jurisdictionGroup_depict},#{jurisdiction})
 	</insert>
 	
 	<update id="update" parameterType="JurisdictionGroup">
-		update JurisdictionGroup set jurisdictionGroup_name=#{jurisdictionGroup_name},jurisdictionGroup_depict=#{jurisdictionGroup_depict} where jurisdictionGroup_id=#{jurisdictionGroup_id}
+		update jurisdictionGroup set jurisdictionGroup_name=#{jurisdictionGroup_name},jurisdictionGroup_depict=#{jurisdictionGroup_depict} where jurisdictionGroup_id=#{jurisdictionGroup_id}
 	</update>
 	
 	<delete id="remove" parameterType="int">
-		delete from JurisdictionGroup where jurisdictionGroup_id=#{jurisdictionGroup_id}
+		delete from jurisdictionGroup where jurisdictionGroup_id=#{jurisdictionGroup_id}
 	</delete>
 	
 	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
 	<select id="findById" parameterType="int" resultType="JurisdictionGroup">
-		select jurisdictionGroup_id jurisdictionGroup_id,jurisdictionGroup_name jurisdictionGroup_name,jurisdictionGroup_depict jurisdictionGroup_depict, jurisdiction jurisdiction from JurisdictionGroup where jurisdictionGroup_id=#{jurisdictionGroup_id}
+		select jurisdictionGroup_id jurisdictionGroup_id,jurisdictionGroup_name jurisdictionGroup_name,jurisdictionGroup_depict jurisdictionGroup_depict, jurisdiction jurisdiction from jurisdictionGroup where jurisdictionGroup_id=#{jurisdictionGroup_id}
 	</select>
 	
 	<select id="findAll" resultType="JurisdictionGroup">
-		select jurisdictionGroup_id jurisdictionGroup_id,jurisdictionGroup_name jurisdictionGroup_name,jurisdictionGroup_depict jurisdictionGroup_depict, jurisdiction jurisdiction from JurisdictionGroup
+		select jurisdictionGroup_id jurisdictionGroup_id,jurisdictionGroup_name jurisdictionGroup_name,jurisdictionGroup_depict jurisdictionGroup_depict, jurisdiction jurisdiction from jurisdictionGroup
 	</select>
 	
 </mapper>

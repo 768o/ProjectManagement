@@ -50,8 +50,10 @@ public class UserServiceImpl implements UserService {
 	public User findById(int id) {
 
 		User user = mapper.findById(id);
-		user.setDepartment(department.findById(user.getDepartment_id()));
-		user.setPost(post.findById(user.getPost_id()));
+		if(user != null) {
+			user.setDepartment(department.findById(user.getDepartment_id()));
+			user.setPost(post.findById(user.getPost_id()));
+		}
 		return user;
 	}
 	public User findByLoginName(String loginName) {

@@ -25,6 +25,8 @@
 <script type="text/javascript" src="/xhSmart/js/jquery.min.js"></script>
 <script type="text/javascript" src="/xhSmart/js/jquery.validate.js"></script>
 
+
+
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#postForm").validate();
@@ -69,6 +71,18 @@ $(document).ready(function(){
 								<input type="submit" class="btn btn-primary" value="提交">
 							</div>
 						</div>
+						<div class='col-sm-6'>
+        <div class="form-group">
+            <label>选择日期：</label>
+            <!--指定 date标记-->
+            <div class='input-group date' id='datetimepicker1'>
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
 					</form>
 				</div>
 				</section>

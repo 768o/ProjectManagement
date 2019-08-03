@@ -20,13 +20,13 @@
      
 
 	 <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-		<property name="driverClass" value="com.mysql.jdbc.Driver"/>
+		<property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
 		<!-- 指定连接数据库的URL-->
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/xhsmart"/>
+		<property name="jdbcUrl" value="jdbc:mysql://193.112.7.152:3306/xhsmart?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=GMT"/>
 		<!-- 指定连接数据库的用户名-->
 		<property name="user" value="root"/>
 		<!-- 指定连接数据库的密码-->
-		<property name="password" value=""/>
+		<property name="password" value="123456"/>
 		<!-- 指定连接池中保留的最大连接数. Default:15-->
 		<property name="maxPoolSize" value="20"/>
 		<!-- 指定连接池中保留的最小连接数-->

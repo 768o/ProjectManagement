@@ -33,14 +33,16 @@ public class AllocationServiceImpl implements AllocationService {
 	@Resource
 	private UserTaskMapper userTaskMapper;
 
-	public boolean remove(int Uid,int Pid) {
+	public boolean remove(int Uid,int Pid,String name) {
 		
-		return mapper.remove(Uid,Pid);
+		return mapper.remove(Uid,Pid,name);
 	}
 
-	public Allocation findById(int project_id, int user_id) {
+	public Allocation findById(int project_id, int user_id,String name) {
 
-		Allocation object = mapper.findById(project_id,user_id);
+		Allocation object = mapper.findById(project_id,user_id,name);
+		System.out.println("Allocation"+object+","+project_id+","+user_id+","+name);
+		System.out.println("Allocation"+object.getName());
 		object.setUser(userMapper.findById(user_id));
 		return object;
 	}
@@ -68,6 +70,18 @@ public class AllocationServiceImpl implements AllocationService {
 		return findAllList2;
 	}
 	
+	public List<Allocation> findByUserId(int user_id){
+		List<Allocation> findAllList1 = mapper.findAllByUserId(user_id);
+		List<Allocation> findAllList2 = new ArrayList<Allocation>();
+		for (Allocation allocation : findAllList1) {
+			allocation.setUser(userMapper.findById(allocation.getUser_id()));
+			allocation.setProject(projectMapper.findById(allocation.getProject_id()));
+			allocation.setTask(userTaskMapper.findById(allocation.getUser_task()));
+			findAllList2.add(allocation);
+		}
+		return findAllList2;
+		
+	}
 	
 
 }

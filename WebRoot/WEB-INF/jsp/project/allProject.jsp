@@ -79,6 +79,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     });
    
     </script>  
+    <script type="text/javascript">
+	function del(id){
+		$.get("<%=basePath%>project/delProject?id=" + id , function(data){
+			if("success" == data.result){
+				alert("删除成功");
+				window.location.reload();
+			}else{
+				alert("删除失败，外键约束");
+			}
+		});
+	}
+</script>
   </head>
   
   <body>
@@ -100,17 +112,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  </div>
    <div class="page-heading">
    <h3> 项目管理 <span>
-      <a href="<%=basePath%>project/getAllProject">项目</a>
-      <a href="<%=basePath%>demand/getAllDemand">需求</a>
-      <a href="<%=basePath%>product/getAllProduct">产品</a>
+      <a href="<%=basePath%>project/getAllProject">我的项目</a>
+      <!--  <a href="<%=basePath%>demand/getAllDemand">需求</a>-->
+      <a href="<%=basePath%>allocation/getAllocation">我的任务</a>
       </span></h3>
       <div class="pull-left">
        <a href="javascript:stateFilter('')" class="btn btn-info btn-sm">全部</a> 
       <a href="javascript:stateFilter('进行中')" class="btn btn-info btn-sm">进行</a> 
-      <a href="javascript:stateFilter('挂起中')" class="btn btn-info btn-sm">挂起</a>
+      <a href="javascript:stateFilter('延期')" class="btn btn-info btn-sm">延期</a>
       <a href="javascript:stateFilter('已结束')" class="btn btn-info btn-sm">结束</a>
       </div>
-      <div class="pull-right"><a href="<%=basePath%>demand/getAllDemand" class="btn btn-success">+添加新项目</a></div>
+      <div class="pull-right"><a href="<%=basePath%>project/toAddProject" class="btn btn-success">+添加新项目</a></div>
       </div>
     <div class="wrapper">
       <div class="row">
@@ -129,9 +141,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th>项目描述</th> 
                         <th>立项人</th>
                         <th>立项时间</th>
-                        <th>立项原因</th>
-                        <th>状态</th>    
                         <th>结束时间</th>
+                        <th>状态</th>    
                         <th>操作</th>      
                       </tr>
                     </thead>
@@ -142,18 +153,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <td><a href="<%=basePath%>project/getAProject?id=${project.project_id}">${project.project_name}</a></td>          
                       <td>${project.project_depict}</td>
                       <td>${project.user.user_name}</td>
-                      <td><fmt:formatDate value="${project.project_createTime}" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td>                
-                      <td>${project.project_createReason}</td>   
+                      <td><fmt:formatDate value="${project.project_createTime}" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                      <td>${project.project_endTime}</td>             
                       <td>${project.project_state}</td>   
-                      <td><fmt:formatDate value="${project.project_endTime}" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                     
                     
                       <td><div class="btn-group">
-                         
-                         <button type="button" class="btn btn-default"><a href="javascript:changeProjectState('${project.project_id }',0)">进行</a></button>
-                         <button type="button" class="btn btn-default"><a href="javascript:changeProjectState('${project.project_id }',1)">挂起</a></button>
-                         <button type="button" class="btn btn-default"><a href="javascript:changeProjectState('${project.project_id }',2)">结束</a></button>
-                         <button type="button" class="btn btn-default"><a href="<%=basePath%>allocation/getAllAllocationByPro?id=${project.project_id}">分工</a></button>
+                         <button type="button" class="btn btn-default"><a href="javascript:changeProjectState('${project.project_id }',2)">完成</a></button>
+                         <button type="button" class="btn btn-default"><a href="<%=basePath%>allocation/getAllAllocationByPro?id=${project.project_id}">任务</a></button>
+                         <button type="button" class="btn btn-default"><a href="javascript:del('${project.project_id}')">删除</a></button>
                         </div></td>
                     
                     </tr>          

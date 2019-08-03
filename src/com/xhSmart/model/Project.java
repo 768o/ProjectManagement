@@ -2,6 +2,7 @@ package com.xhSmart.model;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Project {
 	
@@ -12,13 +13,19 @@ public class Project {
 	private String project_state;               //项目状态 
 	private String project_createReason;        //项目创建原因
 	private Timestamp project_endTime;             //项目结束时间
+	private String project_endTimeStr;             //项目结束时间
 	private int demand_id;                      //需求id
 	private int user_id;
 	private User user;
 	private ArrayList<Product> listProducts;    //项目的产品
 	private ArrayList<Demand> listDemands;      //项目的需求
 	private ArrayList<Allocation> listAllocations;//项目的分配情况
-	
+	public String getproject_endTimeStr() {
+		return project_endTimeStr;
+	}
+	public void setproject_endTimeStr(String project_endTimeStr) {
+		this.project_endTimeStr = project_endTimeStr;
+	}
 	public int getUser_id() {
 		return user_id;
 	}
@@ -67,7 +74,7 @@ public class Project {
 	public void setProject_createReasonString(String project_createReason) {
 		this.project_createReason = project_createReason;
 	}
-	public Timestamp getProject_endTime() {
+	public Date getProject_endTime() {
 		return project_endTime;
 	}
 	public void setProject_endTime(Timestamp endTime) {

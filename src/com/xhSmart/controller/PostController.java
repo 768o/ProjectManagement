@@ -104,6 +104,7 @@ public class PostController {
 	 */
 	@RequestMapping("/delPost")
 	public void delele(int id,HttpServletRequest request,HttpServletResponse response){
+		System.out.println("删除的id"+ id);
 		String result = "{\"result\":\"error\"}";
 		try {
 			if(Service.remove(id)){

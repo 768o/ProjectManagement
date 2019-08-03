@@ -17,16 +17,16 @@
 	</update>
 	
 	<delete id="remove" parameterType="int">
-		delete from Post where post_id=#{post_id}
+		delete from post where post_id=#{post_id}
 	</delete>
 	
 	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
 	<select id="findById" parameterType="int" resultType="Post">
-		select post_id post_id,post_name post_name,post_depict post_depict from Post where post_id=#{post_id}
+		select post_id post_id,post_name post_name,post_depict post_depict from post where post_id=#{post_id}
 	</select>
 	
 	<select id="findAll" resultType="Post">
-		select post_id post_id,post_name post_name,post_depict post_depict from Post
+		select post_id post_id,post_name post_name,post_depict post_depict from post
 	</select>
 	
 </mapper>

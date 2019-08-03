@@ -62,11 +62,14 @@ $(function(){
 				<section class="panel"> <header class="panel-heading">
 				</header>
 				<div class="panel-body">
-					<form action="<%=basePath%>allocation/updateAllocation" class="form-horizontal adminex-form cmxform" id="postForm"  method="post">
+					<form action="<%=basePath%>allocation/updateAllocation" class="form-horizontal adminex-form cmxform" 
+					id="postForm"  method="post" enctype="multipart/form-data">
 						<header>
-						<b> 设置分工 </b></header>
+						<b> 设置任务分工 </b></header>
 						<input type="hidden" name="project_id" value="${allocation.project_id}"> 
 						<input type="hidden" name="user_id" value="${allocation.user_id}"> 
+						<input type="hidden" name="name" value="${allocation.name}"> 
+						<input type="hidden" name="endTime" value="${allocation.endTime}"> 
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label"><span>*</span>部门</label>
 							<div class="col-sm-10">
@@ -82,15 +85,23 @@ $(function(){
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label"><span>*</span>任务</label>
 							<div class="col-sm-10">
-								 <select name="user_task" class="form-control">
-									<c:if test="${!empty taskList }">
-										<c:forEach items="${taskList}" var="task">						   
-													<option value="${task.task_id}">${task.task_name}</option>		
-										</c:forEach>
-									</c:if>
-								</select>
+								<input minlength="2" maxlength="25" type="text" name="name" value="${allocation.name}"
+									class="form-control required" placeholder="任务名" id="name" disabled>
 							</div>
 						</div>
+						<div class="form-group">
+							<label class="col-sm-2 col-sm-2 control-label"><span>*</span>进度</label>
+							<div class="col-sm-10">
+								<input min="${allocation.progress}" max="100" type="number" name="progress" value="${allocation.progress}"
+									class="form-control required" placeholder="进度" id="progress">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 col-sm-2 control-label"><span></span>文件</label>
+							<div class="col-sm-10">
+								<input type="file" class="file" id="file" name="file" >
+							</div>
+					   </div>
 						<!--  <div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label"><span>*</span>权限</label>
 							<div class="col-sm-10">

@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,19 +18,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.alibaba.fastjson.JSON;
 import com.xhSmart.model.Allocation;
 import com.xhSmart.model.Demand;
 import com.xhSmart.model.Feedback;
-import com.xhSmart.model.Product;
+//import com.xhSmart.model.Product;
 import com.xhSmart.model.Project;
 import com.xhSmart.model.User;
 import com.xhSmart.service.AllocationService;
 import com.xhSmart.service.DemandService;
 import com.xhSmart.service.FeedbackService;
-import com.xhSmart.service.ProductService;
+//import com.xhSmart.service.ProductService;
 import com.xhSmart.service.ProjectService;
 import com.xhSmart.service.UserService;
-import com.xhSmart.service.UserTaskService;
+//import com.xhSmart.service.UserTaskService;
 import com.xhSmat.util.Page;
 /**
  * 
@@ -48,14 +50,14 @@ public class ProjectController {
 	private DemandService demandService;
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private ProductService productService;
+	//@Autowired
+	//private ProductService productService;
 	@Autowired
 	private FeedbackService feedbackService;
 	@Autowired
 	private AllocationService allocationService;
-	@Autowired
-	private UserTaskService userTaskService;
+	//@Autowired
+	//private UserTaskService userTaskService;
 	
 	/**
 	 * 根据user是否是管理员，项目名称，页数，显示数据
@@ -114,10 +116,15 @@ public class ProjectController {
 
 		List<Project> findAllList = new ArrayList<Project>();
 		for (Project project : findAll) {
-			//System.out.println(project.getUser_id());
-			if(project.getUser_id()!=0){
-			project.setUser(userService.findById(project.getUser_id()));
+			System.out.println(project.getUser_id());
+			if(project!=null&& project.getUser_id()!=0 && project.getUser_id()!=-1&& project.getProject_id()!=-1){
+				User u = userService.findById(project.getUser_id());
+				if(user != null) {
+					project.setUser(u);
+				}
+			if(project.getProject_id()!=-1 && project.getUser_id() == user_id){
 			findAllList.add(project);
+			}
 			}
 		}
 		System.out.println(findAllList);
@@ -135,29 +142,15 @@ public class ProjectController {
 	@RequestMapping("/getAProject")
 	public String getAProject(int id,HttpServletRequest request){
 		Project project = Service.findById(id);
+		request.setAttribute("project_id", id);
 		project.setUser(userService.findById(project.getUser_id()));
 		request.setAttribute("project", project);
-		HttpSession session = request.getSession();
-		User user = (User)session.getAttribute("user");
-		if(allocationService.findById(project.getProject_id(), user.getUser_id())!=null){
-		Allocation allocation = allocationService.findById(project.getProject_id(), user.getUser_id());
-		allocation.setTask(userTaskService.findById(allocation.getUser_task()));
-	    request.setAttribute("allocation", allocation);
+		//HttpSession session = request.getSession();
+		//User user = (User)session.getAttribute("user");
+		if(allocationService.findAllByPro(project.getProject_id())!=null){
+		List<Allocation> allocation = allocationService.findAllByPro(project.getProject_id());
+	    	request.setAttribute("allocationList", allocation);
 		}
-		List<Demand> demands = demandService.findByProjectId(id);
-		List<Demand> demands2 = new ArrayList<Demand>();
-		for (Demand demand : demands) {
-			demand.setUser(userService.findById(demand.getSubmit_user()));
-			demands2.add(demand);
-		}
-		List<Product> productList = productService.findByProjectId(id);
-		List<Product> productList2 = new ArrayList<Product>();
-		for (Product product : productList) {
-			product.setUser(userService.findById(product.getSubmit_user()));
-			product.setDemand(demandService.findById(product.getDemand_id()));
-			productList2.add(product);
-		}
-		
 		List<Feedback> feedbackListold = feedbackService.findByProjectId(id);
 		List<Feedback> feedbackList = new ArrayList<Feedback>();
 		for (Feedback feedback : feedbackListold) {
@@ -166,10 +159,35 @@ public class ProjectController {
 		}
 		
 		request.setAttribute("feedbackList", feedbackList);
-		request.setAttribute("productList",productList2);
-		request.setAttribute("demandList", demands2);
+		
 		return "/project/aProject";
 	}
+	@RequestMapping("/getAProjectJson")
+	public void getAProjectJson(int id,HttpServletRequest request,HttpServletResponse response) throws IOException{
+		Project project = Service.findById(id);
+		project.setUser(userService.findById(project.getUser_id()));
+		request.setAttribute("project", project);
+		//HttpSession session = request.getSession();
+		//User user = (User)session.getAttribute("user");
+		List<Allocation> allocation = new ArrayList<Allocation>();
+		if(allocationService.findAllByPro(project.getProject_id())!=null && project.getUser_id() > 0){
+			allocation = allocationService.findAllByPro(project.getProject_id());
+	    	request.setAttribute("allocationList", allocation);
+		}
+		
+		List<Allocation> allocation2 = new ArrayList<Allocation>();
+		
+		for(int i = allocation.size()-1;i>=0;i--){
+			allocation.get(i).setUserName(userService.findById(allocation.get(i).getUser_id()).getUser_name());
+			allocation2.add(allocation.get(i));
+			
+		}
+		
+		String json = JSON.toJSONString(allocation2);
+		response.getWriter().println(json);
+	}
+	
+	
 	
 	/**
 	 * 跳转到添加项目界面 
@@ -177,8 +195,8 @@ public class ProjectController {
 	 * @return addPoject.jsp
 	 */
 	@RequestMapping("/toAddProject")
-	public String toAdd(int id, HttpServletRequest request){
-		request.setAttribute("demand_id", id);
+	public String toAdd(HttpServletRequest request){
+		//request.setAttribute("demand_id", id);
 		return "/project/addProject";
 	}
 	/**
@@ -192,43 +210,38 @@ public class ProjectController {
 	@RequestMapping("/addProject")
 	@Transactional
 	public String add(Project object,HttpServletRequest request) throws ParseException{
-		
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		int user_id = user.getUser_id();
 		object.setUser_id(user_id);//获取用户id
-		
+		Date date = new Date();
+		object.setProject_createTime(new Timestamp(date.getTime()));
+		object.setProject_endTime(Timestamp.valueOf(object.getproject_endTimeStr()));
 		object.setProject_state("进行中");
 		Service.save(object);//保存
 		
-		Demand demand=demandService.findById(object.getDemand_id());//获取立项的需求
+		Demand demand=demandService.findById(1);//获取立项的需求
 			
 		int project_id = Service.findByName(object.getProject_name()).getProject_id();
-		//stem.out.println("xiangmudeid"+project_id);
+		System.out.println("xiangmudeid"+project_id);
 		//demand.setDemand_submitTime(MyDateFormat(demand.getDemand_submitTime()));//貌似多余
 		demand.setProject_id(project_id);//设置成刚保存的id
-		//System.out.println("xuqiuid"+demand.getProject_id());
+		System.out.println("xuqiuid"+demand.getProject_id());
 		//demand.setDemand_id(demand.getDemand_id());//貌似多余
 		demand.setDemand_state("已立项");
 		demandService.update(demand);
 		
-		Allocation allocation = new Allocation();
-		allocation.setProject_id(project_id);
-		allocation.setUser_id(demand.getSubmit_user());
-		allocation.setUser_task(1);
-		allocationService.save(allocation);
-		
 		Feedback feedback = new Feedback();
-		feedback.setUser_id(demand.getSubmit_user());
-		feedback.setProject_id(project_id);
-		feedback.setFeedback_name("需求");
-		feedback.setFeedback_depict(userService.findById(demand.getSubmit_user()).getUser_name()+" 添加了需求 "+demand.getDemand_name());//需求
-		feedbackService.save(feedback);
+		//feedback.setUser_id(demand.getSubmit_user());
+		//feedback.setProject_id(project_id);
+		//feedback.setFeedback_name("需求");
+		//feedback.setFeedback_depict(userService.findById(demand.getSubmit_user()).getUser_name()+" 添加了需求 "+demand.getDemand_name());//需求
+		//feedbackService.save(feedback);
 		
 		feedback = new Feedback();
 		feedback.setUser_id(user_id);
 		feedback.setProject_id(project_id);
-		feedback.setFeedback_name("项目");
+		feedback.setFeedback_name("创建项目");
 		feedback.setFeedback_depict(user.getUser_name()+" 开始了项目 "+object.getProject_name());//立项反馈
 		feedbackService.save(feedback);
 		
@@ -280,9 +293,11 @@ public class ProjectController {
 	 */
 	@RequestMapping("/delProject")
 	public void delele(int id,HttpServletRequest request,HttpServletResponse response){
+		Project project = Service.findById(id);
+		project.setUser_id(-1);
 		String result = "{\"result\":\"error\"}";
 		try {
-			if(Service.remove(id)){
+			if(Service.update(project)){
 				result = "{\"result\":\"success\"}";
 			}
 		} catch (Exception e) {

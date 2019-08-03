@@ -8,14 +8,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>xhSmart项目管理系统</title>
+<title>任务进度管理系统</title>
  <base href="<%=basePath%>">
 <decorator:head />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="author" content="lock">
 <meta name="keywords" content="xhSmart,管理系统">
 <meta name="description" content="xhSmart管理系统">
-<link rel="shortcut icon" href="/xhSmart/img/favicon.ico" type="image/png">
 <link href="/xhSmart/css/style.css" rel="stylesheet" type="text/css">
 <link href="/xhSmart/css/style-responsive.css" rel="stylesheet" type="text/css">
 <link href="/xhSmart/css/table-responsive.css" rel="stylesheet" type="text/css">
@@ -29,6 +28,12 @@ function find(){
 	stateFilter(text);
 }
 </script>
+<script type="text/javascript" src="/xhSmart/js/jquery.min.js"></script>
+<script type="text/javascript" src="/xhSmart/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/xhSmart/js/jquery.nicescroll.js"></script>
+<script type="text/javascript" src="/xhSmart/js/scripts.js"></script>
+<script type="text/javascript" src="/xhSmart/js/jquery.validate.js"></script>
+<script type="text/javascript" src="/xhSmart/js/opms.js"></script>
 </head>
 <body class="sticky-header">
 <section> 
@@ -67,12 +72,6 @@ function find(){
     <footer> 2017 &copy; xhSmart &nbsp;&nbsp;<a href="">帮助</a> &middot; <a href="">用户反馈</a></footer>
   </div>
 </section>
-<script type="text/javascript" src="/xhSmart/js/jquery.min.js"></script>
-<script type="text/javascript" src="/xhSmart/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/xhSmart/js/jquery.nicescroll.js"></script>
-<script type="text/javascript" src="/xhSmart/js/scripts.js"></script>
-<script type="text/javascript" src="/xhSmart/js/jquery.validate.js"></script>
-<script type="text/javascript" src="/xhSmart/js/opms.js"></script>
 </body>
 </html>
 

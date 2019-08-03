@@ -9,31 +9,37 @@
 <mapper namespace="com.xhSmart.mapper.AllocationMapper">
 	
 	<insert id="save" parameterType="Allocation">
-		insert into allocation(project_id, user_task, user_id) values(#{project_id},#{user_task},#{user_id})
+		insert into allocation(project_id, user_task, user_id, name, progress,endTime,path) values(#{project_id},#{user_task},#{user_id},#{name},#{progress},#{endTime},#{path})
 	</insert>
 	
 	<update id="update" parameterType="Allocation">
-		update allocation set user_task=#{user_task} where project_id=#{project_id} and user_id=#{user_id}
+		update allocation set user_task=#{user_task}, progress=#{progress},endTime=#{endTime},path=#{path} where project_id=#{project_id} and user_id=#{user_id} and name = #{name}
 	</update>
 	
 	<delete id="remove" parameterType="int">
-		delete from allocation where user_id=#{0} and project_id = #{1}
+		delete from allocation where user_id=#{0} and project_id = #{1} and name = #{2}
 	</delete>
 	
 	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
 	<select id="findById"  resultType="Allocation">
 		select project_id project_id, user_jurisdictionGroup user_jurisdictionGroup, 
-		user_joinTime user_joinTime, user_task user_task, user_id user_id, 
-		user_isQuit user_isQuit from allocation where project_id=#{0} and user_id=#{1}
+		user_joinTime user_joinTime, user_task user_task, user_id user_id , name name, progress progress, endTime endTime, path path,
+		user_isQuit user_isQuit from allocation where project_id=#{0} and user_id=#{1} and name = #{2} order by user_joinTime desc limit 1
 	</select>
 	<select id="findAllByPro" parameterType="int" resultType="Allocation">
 		select project_id project_id, user_jurisdictionGroup 
-		user_jurisdictionGroup, user_joinTime user_joinTime, 
-		user_task user_task, user_id user_id, user_isQuit user_isQuit from allocation where project_id=#{project_id}             
+		user_jurisdictionGroup, user_joinTime user_joinTime, name name, progress progress, endTime endTime, progress progress, path path,
+		user_task user_task, user_id user_id, user_isQuit user_isQuit from allocation where project_id=#{project_id} order by user_joinTime desc        
 	</select>
 	<select id="findAll" resultType="Allocation">
-		select project_id project_id, user_jurisdictionGroup user_jurisdictionGroup, 
+		select project_id project_id, user_jurisdictionGroup user_jurisdictionGroup, name name, progress progress, endTime endTime, path path,
 		user_joinTime user_joinTime, user_task user_task, user_id user_id, user_isQuit user_isQuit from allocation                  
+	</select>
+	<select id="findAllByUserId" parameterType="int" resultType="Allocation">
+		select allocation.project_id project_id, user_jurisdictionGroup 
+		user_jurisdictionGroup, user_joinTime user_joinTime, allocation.name name, progress progress, endTime endTime, path path,
+		user_task user_task, allocation.user_id user_id, user_isQuit user_isQuit from allocation, project where allocation.project_id = project.project_id 
+		and project.user_id >0 and allocation.user_id=#{user_id}    
 	</select>
 	
 </mapper>

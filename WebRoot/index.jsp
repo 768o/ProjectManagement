@@ -21,6 +21,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    	<a href="<%=basePath%>demand/getAllDemand">进入需求管理页</a><BR>
     <a href="<%=basePath%>project/getAllProject">进入项目管理页</a><BR>
     <a href="<%=basePath%>product/getAllProduct">进入产品管理页</a><BR>
-    <a href=" <%=basePath%>allocation/getAllAllocation">进入分工管理页</a><BR>
+    <a href=" <%=basePath%>allocation/getAllAllocation">进入任务分工管理页</a><BR>
   </body>
 </html>

@@ -24,6 +24,8 @@
 
 <script type="text/javascript" src="/xhSmart/js/jquery.min.js"></script>
 <script type="text/javascript" src="/xhSmart/js/jquery.validate.js"></script>
+<script type="text/javascript" src="/xhSmart/js/jedate.js"></script>
+<link rel="stylesheet" type="text/css" href="/xhSmart/js/jedate.css">
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -40,7 +42,6 @@ $(document).ready(function(){
 
 				<div class="panel-body">
 					<form action="<%=basePath%>project/addProject" class="form-horizontal adminex-form cmxform" id="postForm"  method="post" enctype="multipart/form-data">
-						<input type="hidden" name="demand_id" value="${demand_id}"/>
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label"><span>*</span>名称</label>
 							<div class="col-sm-10">
@@ -62,6 +63,13 @@ $(document).ready(function(){
 									placeholder="请填写原因" style="height:90px;" class="form-control required"></textarea>
 							</div>
 						</div>
+						<div class="form-group jeitem">
+			                <label class="col-sm-2 col-sm-2 control-label jelabel">预约完成时间</label>
+			                <div class="col-sm-10 jeinpbox">
+			                	<input class="form-control required" type="text" class="jeinput" name="project_endTimeStr"
+			                		id="test04" placeholder="YYYY-MM-DD hh:mm:ss">
+			                </div>
+			            </div>
 						<div class="form-group">
 							<label class="col-lg-2 col-sm-2 control-label"></label>
 							<div class="col-lg-10">
@@ -74,5 +82,6 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" src="/xhSmart/js/demo.js"></script>
 </body>
 </html>
